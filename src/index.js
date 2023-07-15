@@ -7,11 +7,12 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import "./index.css";
-import App1 from './App1';
-import App2 from './App2';
-import App3 from './App3';
-
+import "./index.css"; 
+import App2 from './App2'; 
+import Cart from "./pages/cart"
+import Order from './pages/Order'
+import OrderSummary from "./pages/Summary/OrderSummary";
+import Orders from "./pages/admin/orders";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -19,16 +20,24 @@ const router = createBrowserRouter([
   },
   {
     path: "/order",
-    element: <App1 />
+    element:  <Order />
   },
   {
     path: "/menu",
     element: <App2 />
   },
   {
-    path: "/ordersummary",
-    element: <App3 />
+    path: "/cart",
+    element: <Cart />
   },
+  {
+    path: "/summary",
+    element: <OrderSummary />
+  },
+  {
+    path: "/admin/orders",
+    element: <Orders/>
+  }
 ]);
 <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css"></link>
 ReactDOM.createRoot(document.getElementById("root")).render(

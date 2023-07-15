@@ -1,25 +1,32 @@
 import React, { useState } from 'react';
-
-export const OrderSummary = () => {
+import cities from "./cities.json"
+export const OrderSummary = ({cart}) => {
   const [isOrderPlaced, setIsOrderPlaced] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Perform any necessary submission logic here
-    const data = new FormData(event.target);
+
+    const formData = new FormData(event.target);
+    const formDataObj = Object.fromEntries(formData.entries());
+    console.log("data to send", formDataObj)
     var requestOptions = {
       method: 'POST',
-      
-      body: data
+      body: JSON.stringify({...formDataObj, OrderId: Number(localStorage.getItem("order_id")) }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
     };
-   
-    fetch("http://localhost:4000/OrderSummary", requestOptions)
-      .then(response => response.json())
-      .then(result => result && console.log(result))
+
+    fetch("http://localhost:4000/order", requestOptions)
+      .then(response => response.text())
+      .then(result => {
+        console.log(result); // Handle the response from the server as needed
+        setIsOrderPlaced(true); // Update menu state if required
+        localStorage.removeItem("order_id")
+      })
       .catch(error => console.log('error', error));
-    // Set the order placed state to true
-    setIsOrderPlaced(true);
   };
+
 
   return (
     <section className="order" id="order">
@@ -39,22 +46,25 @@ export const OrderSummary = () => {
             <span>Phone number</span>
             <input type="number" name="phoneno" placeholder="enter your number" />
           </div>
-          <div className="input">
-            <span>Pin code</span>
-            <input type="number" name="pincode" placeholder="pin code no." />
-          </div>
-          <div className="input">
-            <span>City & State</span>
-            <input type="text" name="citystate" placeholder="enter the city and state" />
-          </div>
-          <div className="input">
-            <span>date and time</span>
-            <input type="datetime-local" name="date time" />
-          </div>
+  
+      
+         
         </div>
           <div className="input">
             <span>your address</span>
             <textarea name="address" placeholder="enter your address" id="" cols="30" rows="10"></textarea>
+          </div>
+          <div className="input">
+            <span>City & State</span>
+            <select name="citystate" id="cities">
+              {
+                Object.keys(cities).map(state =>  <optgroup label={state}>{cities[state].map((city) => <option value={city + "," + state}>{city}</option>)}</optgroup>)
+              } 
+</select> 
+          </div>
+          <div className="input">
+            <span>Pin code</span>
+            <input type="number" name="pincode" placeholder="pin code no." />
           </div>
           <div className="input">
             <span>your message</span>

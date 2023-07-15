@@ -41,12 +41,13 @@ section {
     color:grey;
 }
 
-.details button{
+/* .details button{
     padding: 5px 10px;
     border: none;
     font-weight: bold;
+    color:white;
     background-color: seagreen;
-}
+} */
 
 .warning{
     height: 40px;

@@ -4,12 +4,10 @@ import FooterOverlay from './Footer/FooterOverlay';
 import MenuItem from './Menuitem/MenuItem';
 import Navbar from './Navbar/Navbar';
 import Login from "./Login/Login"
-import Register from "./Register/Register"
-import Order from "./Order/Order"
+import Register from "./Register/Register" 
 import Navigationbar from "./Navigationbar/Navigationbar"
 import Menu1 from "./Menu1/Menu1";
-import Cart from "./Cart/Cart";
-import OrderSummary from "./OrderSummary/OrderSummary";
+import Cart from "./Cart/Cart"; 
 
 export {
   SubHeading,
@@ -18,10 +16,8 @@ export {
   MenuItem,
   Navbar,
   Login,
-  Register ,
-  Order,
+  Register , 
   Navigationbar,
   Menu1,
-  Cart,
-  OrderSummary,
+  Cart, 
 };

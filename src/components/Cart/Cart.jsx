@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import './Cart.css';
-import OrderSummary from './OrderSummary';
+import './Cart.css'; 
+import { Link } from 'react-router-dom';
 
 
 const Cart = ({ cart, setCart }) => {
@@ -11,7 +11,7 @@ const Cart = ({ cart, setCart }) => {
   const handlePrice = () => {
     let total = 0;
     cart.forEach((item) => {
-      const itemTotal = parseInt(item.price)*parseInt(item.amount);
+      const itemTotal = parseInt(item.price)*parseInt(item.quantity);
       if(!isNaN(itemTotal)) {
       total += itemTotal;
       }
@@ -31,21 +31,21 @@ const Cart = ({ cart, setCart }) => {
     const updatedCart = cart.map((cartItem) => {
       if (cartItem.id === item.id) {
         
-        console.log("item.amount is "+item.amount);
-        console.log("cartitem.amount is "+cartItem.amount);
-        if(isNaN(item.amount)){
-           cartItem.amount=item.amount=0;
+        console.log("item.quantity is "+item.quantity);
+        console.log("cartitem.quantity is "+cartItem.quantity);
+        if(isNaN(item.quantity)){
+           cartItem.quantity=item.quantity=0;
         }
-        console.log("item.amount is "+item.amount);
-        console.log("cartitem.amount is "+cartItem.amount);
-        let updatedAmount = cartItem.amount + d;
-        console.log("updated amount is "+updatedAmount)
-        if (updatedAmount < 1) {
-          updatedAmount = 1; // Prevent negative values
+        console.log("item.quantity is "+item.quantity);
+        console.log("cartitem.quantity is "+cartItem.quantity);
+        let updatedQuantity = cartItem.quantity + d;
+        console.log("updated quantity is "+updatedQuantity)
+        if (updatedQuantity < 1) {
+          updatedQuantity = 1; // Prevent negative values
         }
         return {
           ...cartItem,
-          amount: updatedAmount,
+          quantity: updatedQuantity,
         };
       }
       return cartItem;
@@ -60,14 +60,8 @@ const Cart = ({ cart, setCart }) => {
     setCart(updatedCart);
     handlePrice();
   };
-
-  const handleBuyNow = () => {
-    setIsOrderPlaced(true);
-  };
-
-  if (isOrderPlaced) {
-    return <OrderSummary />;
-  }
+ 
+ 
 
   return (
     <article>
@@ -75,16 +69,17 @@ const Cart = ({ cart, setCart }) => {
         <div className="cart_box" key={item.id}>
            {console.log(item)}
           <div className="cart_img">
-            <img src={item.img} width="50" height="50" alt={item.title} />
-            <p>{item.title}</p>
+            <img src={item.image} width="50" height="50" alt={item.title} />
+            <p>{item.name}</p>
           </div>
           <div>
-            <button onClick={() => handleChange(item, 1)}>+</button>
-            <button>{item.amount}</button>
+         
             <button onClick={() => handleChange(item, -1)}>-</button>
+            <button>{item.quantity}</button>
+            <button onClick={() => handleChange(item, 1)}>+</button>
           </div>
           <div>
-            <span>{item.price}</span>
+            <span>${item.price}</span>
             <button onClick={() => handleRemove(item.id)}>Remove</button>
           </div>
         </div>
@@ -94,9 +89,9 @@ const Cart = ({ cart, setCart }) => {
         <span>${price}</span>
       </div>
       <div className="buttonClass">
-        <button onClick={handleBuyNow}>
-          <center>Buy Now</center>
-        </button>
+        <Link to="/summary">
+          <center>Place Order</center>
+        </Link>
       </div>
     </article>
   );
